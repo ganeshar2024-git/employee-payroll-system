@@ -1,4 +1,4 @@
-# Payroll calculation module
+# Payroll calculation module - Updated with HRA and PF
 def calculate_salary(basic, allowance, deduction):
     gross = basic + allowance
     net = gross - deduction
@@ -10,7 +10,14 @@ def calculate_salary(basic, allowance, deduction):
         "net_salary": final
     }
 
-# Added in development branch
+def calculate_hra(basic_salary):
+    hra = basic_salary * 0.20  # 20% of basic
+    return {"hra": hra}
+
+def calculate_pf(basic_salary):
+    pf = basic_salary * 0.12  # 12% PF deduction
+    return {"pf_deduction": pf}
+
 def generate_payslip(emp_id, month, net_salary):
     return {
         "employee_id": emp_id,
@@ -18,4 +25,3 @@ def generate_payslip(emp_id, month, net_salary):
         "net_salary": net_salary,
         "status": "Generated"
     }
-  
