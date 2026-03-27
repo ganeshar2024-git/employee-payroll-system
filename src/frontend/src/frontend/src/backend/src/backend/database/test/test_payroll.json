@@ -1,0 +1,34 @@
+{
+  "test_cases": [
+    {
+      "test_id": "TC001",
+      "description": "Valid salary calculation",
+      "input": {
+        "basic": 50000,
+        "allowance": 10000,
+        "deduction": 5000
+      },
+      "expected_output": {
+        "gross_salary": 60000,
+        "tax": 5500,
+        "net_salary": 49500
+      },
+      "status": "PASS"
+    },
+    {
+      "test_id": "TC002",
+      "description": "Zero allowance test",
+      "input": {
+        "basic": 30000,
+        "allowance": 0,
+        "deduction": 2000
+      },
+      "expected_output": {
+        "gross_salary": 30000,
+        "tax": 2800,
+        "net_salary": 25200
+      },
+      "status": "PASS"
+    }
+  ]
+}
