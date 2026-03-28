@@ -1,47 +1,262 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Employee Payroll Dashboard</title>
+  <title>Employee Payroll Management System</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: linear-gradient(to right, #dbeafe, #f0f9ff);
+      color: #1e293b;
+    }
+
+    .header {
+      background: #1d4ed8;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .header p {
+      margin: 8px 0 0;
+      font-size: 18px;
+    }
+
+    .container {
+      width: 85%;
+      margin: 30px auto;
+    }
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 25px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    }
+
+    .nav a {
+      display: inline-block;
+      margin-right: 15px;
+      text-decoration: none;
+      color: white;
+      background: #0f172a;
+      padding: 10px 16px;
+      border-radius: 8px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 12px;
+      margin-bottom: 6px;
+    }
+
+    input, select {
+      width: 95%;
+      padding: 10px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 15px;
+    }
+
+    button {
+      margin-top: 18px;
+      background: #2563eb;
+      color: white;
+      border: none;
+      padding: 12px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 15px;
+    }
+
+    button:hover {
+      background: #1e40af;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 18px;
+      background: #f8fafc;
+    }
+
+    table, th, td {
+      border: 1px solid #cbd5e1;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: left;
+    }
+
+    th {
+      background: #dbeafe;
+    }
+
+    .employee-box {
+      background: #eff6ff;
+      border-left: 5px solid #2563eb;
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 12px;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 20px;
+      color: #334155;
+    }
+  </style>
 </head>
 <body>
 
-  <h1>Welcome to Employee Payroll Management System</h1>
-  <p>New Feature: HRA & PF Calculation Enabled</p>
+  <div class="header">
+    <h1>Employee Payroll Management System</h1>
+    <p>Enhanced Version: HRA, PF, Bonus and Interactive Payslip Enabled</p>
+    <div class="nav">
+      <a href="login.html">Login</a>
+      <a href="payslip.html">View Payslip</a>
+    </div>
+  </div>
 
-  <nav>
-    <a href="login.html">Login</a>
-    <a href="payslip.html">View Payslip</a>
-  </nav>
+  <div class="container">
 
-  <hr>
+    <div class="card">
+      <h2>Organization Information</h2>
+      <p><strong>Organization:</strong> ABC Technologies Pvt Ltd</p>
+      <p><strong>Department Options:</strong> HR, Finance, IT, Operations</p>
+    </div>
 
-  <h2>Salary Calculator</h2>
+    <div class="card">
+      <h2>Employee Details</h2>
+      <label for="employee">Select Employee</label>
+      <select id="employee" onchange="showEmployeeDetails()">
+        <option value="">-- Select Employee --</option>
+        <option value="E101|Arun Kumar|Finance|ABC Technologies Pvt Ltd">E101 - Arun Kumar</option>
+        <option value="E102|Meena S|HR|ABC Technologies Pvt Ltd">E102 - Meena S</option>
+        <option value="E103|Rahul V|IT|ABC Technologies Pvt Ltd">E103 - Rahul V</option>
+      </select>
 
-  <input type="number" id="basic" placeholder="Enter Basic Salary"><br><br>
-  <input type="number" id="allowance" placeholder="Enter Allowance"><br><br>
-  <input type="number" id="deduction" placeholder="Enter Deduction"><br><br>
+      <div id="employeeDetails" class="employee-box" style="display:none;"></div>
+    </div>
 
-  <button onclick="calculateSalary()">Calculate Salary</button>
+    <div class="card">
+      <h2>Salary Calculator</h2>
+      <div class="grid">
+        <div>
+          <label for="basic">Basic Salary</label>
+          <input type="number" id="basic" placeholder="Enter Basic Salary">
 
-  <h3 id="result"></h3>
+          <label for="allowance">Allowance</label>
+          <input type="number" id="allowance" placeholder="Enter Allowance">
+
+          <label for="deduction">Deduction</label>
+          <input type="number" id="deduction" placeholder="Enter Deduction">
+        </div>
+
+        <div>
+          <label for="hra">HRA %</label>
+          <input type="number" id="hra" value="20">
+
+          <label for="pf">PF %</label>
+          <input type="number" id="pf" value="12">
+
+          <label for="month">Salary Month</label>
+          <input type="text" id="month" placeholder="Example: March 2026">
+        </div>
+      </div>
+
+      <button onclick="calculateSalary()">Calculate Salary</button>
+    </div>
+
+    <div class="card">
+      <h2>Payslip Summary</h2>
+      <table>
+        <tr>
+          <th>Field</th>
+          <th>Value</th>
+        </tr>
+        <tr><td>Gross Salary</td><td id="grossOut">-</td></tr>
+        <tr><td>Bonus</td><td id="bonusOut">-</td></tr>
+        <tr><td>HRA</td><td id="hraOut">-</td></tr>
+        <tr><td>PF Deduction</td><td id="pfOut">-</td></tr>
+        <tr><td>Tax</td><td id="taxOut">-</td></tr>
+        <tr><td>Final Salary</td><td id="finalOut">-</td></tr>
+      </table>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    <p>SCM Demonstration Project - Employee Payroll Management System</p>
+  </div>
 
   <script>
+    function showEmployeeDetails() {
+      let employee = document.getElementById("employee").value;
+      let box = document.getElementById("employeeDetails");
+
+      if (employee === "") {
+        box.style.display = "none";
+        return;
+      }
+
+      let data = employee.split("|");
+
+      box.style.display = "block";
+      box.innerHTML =
+        "<strong>Employee ID:</strong> " + data[0] + "<br>" +
+        "<strong>Name:</strong> " + data[1] + "<br>" +
+        "<strong>Department:</strong> " + data[2] + "<br>" +
+        "<strong>Organization:</strong> " + data[3];
+    }
+
     function calculateSalary() {
       let basic = Number(document.getElementById("basic").value);
       let allowance = Number(document.getElementById("allowance").value);
       let deduction = Number(document.getElementById("deduction").value);
+      let hraPercent = Number(document.getElementById("hra").value);
+      let pfPercent = Number(document.getElementById("pf").value);
 
       let bonus = basic * 0.05;
-      let gross = basic + allowance + bonus;
-      let net = gross - deduction;
-      let tax = net * 0.10;
-      let finalSalary = net - tax;
+      let hra = basic * (hraPercent / 100);
+      let gross = basic + allowance + bonus + hra;
+      let pf = basic * (pfPercent / 100);
+      let netBeforeTax = gross - deduction - pf;
+      let tax = netBeforeTax * 0.10;
+      let finalSalary = netBeforeTax - tax;
 
-      document.getElementById("result").innerText =
-        "Gross: " + gross +
-        " | Bonus: " + bonus +
-        " | Tax: " + tax +
-        " | Final Salary: " + finalSalary;
+      document.getElementById("grossOut").innerText = gross.toFixed(2);
+      document.getElementById("bonusOut").innerText = bonus.toFixed(2);
+      document.getElementById("hraOut").innerText = hra.toFixed(2);
+      document.getElementById("pfOut").innerText = pf.toFixed(2);
+      document.getElementById("taxOut").innerText = tax.toFixed(2);
+      document.getElementById("finalOut").innerText = finalSalary.toFixed(2);
+
+      localStorage.setItem("grossSalary", gross.toFixed(2));
+      localStorage.setItem("bonus", bonus.toFixed(2));
+      localStorage.setItem("hra", hra.toFixed(2));
+      localStorage.setItem("pf", pf.toFixed(2));
+      localStorage.setItem("tax", tax.toFixed(2));
+      localStorage.setItem("finalSalary", finalSalary.toFixed(2));
+      localStorage.setItem("salaryMonth", document.getElementById("month").value);
+
+      let employee = document.getElementById("employee").value;
+      if (employee !== "") {
+        let data = employee.split("|");
+        localStorage.setItem("empId", data[0]);
+        localStorage.setItem("empName", data[1]);
+        localStorage.setItem("department", data[2]);
+        localStorage.setItem("organization", data[3]);
+      }
     }
   </script>
 
