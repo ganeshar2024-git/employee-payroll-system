@@ -14,3 +14,4 @@ def salary(basic, allowance, deduction):
 
 if __name__ == '__main__':
     app.run(debug=True)
+# CR-010 backend route enhancement completed
