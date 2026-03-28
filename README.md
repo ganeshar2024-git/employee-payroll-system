@@ -1,2 +1,2 @@
 # employee-payroll-system
-SCM Case Study - Web Based Employee Payroll Management System
+SCM - Web Based Employee Payroll Management System
