@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Employee Payslip</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f8fafc;
+      margin: 0;
+      padding: 30px;
+    }
+
+    .payslip {
+      max-width: 700px;
+      margin: auto;
+      background: white;
+      border-radius: 12px;
+      padding: 25px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    h1 {
+      text-align: center;
+      color: #1d4ed8;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th, td {
+      border: 1px solid #cbd5e1;
+      padding: 12px;
+      text-align: left;
+    }
+
+    th {
+      background: #dbeafe;
+    }
+
+    .top-box {
+      margin-bottom: 20px;
+      background: #eff6ff;
+      padding: 15px;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body onload="loadPayslip()">
+
+  <div class="payslip">
+    <h1>Employee Payslip</h1>
+
+    <div class="top-box">
+      <p><strong>Employee ID:</strong> <span id="empId"></span></p>
+      <p><strong>Employee Name:</strong> <span id="empName"></span></p>
+      <p><strong>Department:</strong> <span id="department"></span></p>
+      <p><strong>Organization:</strong> <span id="organization"></span></p>
+      <p><strong>Month:</strong> <span id="salaryMonth"></span></p>
+    </div>
+
+    <table>
+      <tr><th>Component</th><th>Amount</th></tr>
+      <tr><td>Gross Salary</td><td id="grossSalary"></td></tr>
+      <tr><td>Bonus</td><td id="bonus"></td></tr>
+      <tr><td>HRA</td><td id="hra"></td></tr>
+      <tr><td>PF Deduction</td><td id="pf"></td></tr>
+      <tr><td>Tax</td><td id="tax"></td></tr>
+      <tr><td>Final Salary</td><td id="finalSalary"></td></tr>
+    </table>
+  </div>
+
+  <script>
+    function loadPayslip() {
+      document.getElementById("empId").innerText = localStorage.getItem("empId") || "-";
+      document.getElementById("empName").innerText = localStorage.getItem("empName") || "-";
+      document.getElementById("department").innerText = localStorage.getItem("department") || "-";
+      document.getElementById("organization").innerText = localStorage.getItem("organization") || "-";
+      document.getElementById("salaryMonth").innerText = localStorage.getItem("salaryMonth") || "-";
+
+      document.getElementById("grossSalary").innerText = localStorage.getItem("grossSalary") || "-";
+      document.getElementById("bonus").innerText = localStorage.getItem("bonus") || "-";
+      document.getElementById("hra").innerText = localStorage.getItem("hra") || "-";
+      document.getElementById("pf").innerText = localStorage.getItem("pf") || "-";
+      document.getElementById("tax").innerText = localStorage.getItem("tax") || "-";
+      document.getElementById("finalSalary").innerText = localStorage.getItem("finalSalary") || "-";
+    }
+  </script>
+
+</body>
+</html>
