@@ -32,17 +32,19 @@
     },
     {
       "test_id": "TC003",
-      "description": "Bonus calculation test",
+      "description": "Bonus, HRA and PF calculation test",
       "input": {
-        "basic": 40000,
-        "allowance": 5000,
-        "deduction": 3000
+        "basic": 50000,
+        "allowance": 12000,
+        "deduction": 6000
       },
       "expected_output": {
-        "gross_salary": 47000,
-        "bonus": 2000,
-        "tax": 4400,
-        "net_salary": 39600
+        "gross_salary": 74500,
+        "bonus": 2500,
+        "hra": 10000,
+        "pf_deduction": 6000,
+        "tax": 6250,
+        "net_salary": 56250
       },
       "status": "PASS"
     }
