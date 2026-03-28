@@ -18,3 +18,6 @@ CREATE TABLE payroll (
     net_salary DECIMAL(10,2),
     FOREIGN KEY (emp_id) REFERENCES employees(emp_id)
 );
+ALTER TABLE employees ADD email VARCHAR(100);
+ALTER TABLE payroll ADD bonus DECIMAL(10,2);
+ALTER TABLE payroll ADD payment_status VARCHAR(20);
