@@ -5,6 +5,8 @@ CREATE TABLE employees (
     name VARCHAR(100),
     department VARCHAR(50),
     designation VARCHAR(50),
+    email VARCHAR(100),
+    organization VARCHAR(100),
     basic_salary DECIMAL(10,2),
     joining_date DATE
 );
@@ -15,9 +17,11 @@ CREATE TABLE payroll (
     month VARCHAR(20),
     allowance DECIMAL(10,2),
     deduction DECIMAL(10,2),
+    bonus DECIMAL(10,2),
+    hra DECIMAL(10,2),
+    pf_deduction DECIMAL(10,2),
+    tax DECIMAL(10,2),
     net_salary DECIMAL(10,2),
+    payment_status VARCHAR(20),
     FOREIGN KEY (emp_id) REFERENCES employees(emp_id)
 );
-ALTER TABLE employees ADD email VARCHAR(100);
-ALTER TABLE payroll ADD bonus DECIMAL(10,2);
-ALTER TABLE payroll ADD payment_status VARCHAR(20);
