@@ -25,3 +25,4 @@ CREATE TABLE payroll (
     payment_status VARCHAR(20),
     FOREIGN KEY (emp_id) REFERENCES employees(emp_id)
 );
+-- CR-003 database schema enhanced with additional payroll fields
