@@ -48,3 +48,4 @@ def generate_payslip(emp_id, month, net_salary):
         "net_salary": net_salary,
         "status": "Generated"
     }
+# CR-002 bonus feature updated 
