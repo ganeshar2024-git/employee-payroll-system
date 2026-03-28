@@ -25,3 +25,19 @@ def generate_payslip(emp_id, month, net_salary):
         "net_salary": net_salary,
         "status": "Generated"
     }
+def calculate_bonus(basic_salary):
+    bonus = basic_salary * 0.05
+    return {"bonus": bonus}
+
+def calculate_total_salary(basic, allowance, deduction):
+    bonus = basic * 0.05
+    gross = basic + allowance + bonus
+    net = gross - deduction
+    tax = net * 0.10
+    final = net - tax
+    return {
+        "gross_salary": gross,
+        "bonus": bonus,
+        "tax": tax,
+        "net_salary": final
+    }
