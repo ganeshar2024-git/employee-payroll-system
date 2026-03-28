@@ -1,12 +1,49 @@
 <!DOCTYPE html>
 <html>
-<head><title>Employee Payroll Dashboard</title></head>
+<head>
+  <title>Employee Payroll Dashboard</title>
+</head>
 <body>
+
   <h1>Welcome to Employee Payroll Management System</h1>
   <p>New Feature: HRA & PF Calculation Enabled</p>
+
   <nav>
     <a href="login.html">Login</a>
     <a href="payslip.html">View Payslip</a>
   </nav>
+
+  <hr>
+
+  <h2>Salary Calculator</h2>
+
+  <input type="number" id="basic" placeholder="Enter Basic Salary"><br><br>
+  <input type="number" id="allowance" placeholder="Enter Allowance"><br><br>
+  <input type="number" id="deduction" placeholder="Enter Deduction"><br><br>
+
+  <button onclick="calculateSalary()">Calculate Salary</button>
+
+  <h3 id="result"></h3>
+
+  <script>
+    function calculateSalary() {
+      let basic = Number(document.getElementById("basic").value);
+      let allowance = Number(document.getElementById("allowance").value);
+      let deduction = Number(document.getElementById("deduction").value);
+
+      let bonus = basic * 0.05;
+      let gross = basic + allowance + bonus;
+      let net = gross - deduction;
+      let tax = net * 0.10;
+      let finalSalary = net - tax;
+
+      document.getElementById("result").innerText =
+        "Gross: " + gross +
+        " | Bonus: " + bonus +
+        " | Tax: " + tax +
+        " | Final Salary: " + finalSalary;
+    }
+  </script>
+
 </body>
 </html>
