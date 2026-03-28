@@ -26,3 +26,4 @@ CREATE TABLE payroll (
     FOREIGN KEY (emp_id) REFERENCES employees(emp_id)
 );
 -- CR-003 database schema enhanced with additional payroll fields
+-- CR-011 organization and payroll schema fields validated
