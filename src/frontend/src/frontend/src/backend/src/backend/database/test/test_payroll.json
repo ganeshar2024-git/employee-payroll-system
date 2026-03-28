@@ -29,6 +29,22 @@
         "net_salary": 25200
       },
       "status": "PASS"
+    },
+    {
+      "test_id": "TC003",
+      "description": "Bonus calculation test",
+      "input": {
+        "basic": 40000,
+        "allowance": 5000,
+        "deduction": 3000
+      },
+      "expected_output": {
+        "gross_salary": 47000,
+        "bonus": 2000,
+        "tax": 4400,
+        "net_salary": 39600
+      },
+      "status": "PASS"
     }
   ]
 }
