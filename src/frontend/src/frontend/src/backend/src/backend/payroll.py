@@ -1,52 +1,84 @@
-# Payroll calculation module - Enhanced version
+# Payroll Module v2.0 - Real-Time Salary, Deductions & Allowances
 
-def calculate_salary(basic, allowance, deduction):
-    gross = basic + allowance
-    net = gross - deduction
-    tax = net * 0.10
-    final = net - tax
+# Salary structure based on Department and Experience
+SALARY_STRUCTURE = {
+    "IT":         {"0-2": 35000, "2-5": 55000, "5+": 85000},
+    "HR":         {"0-2": 25000, "2-5": 40000, "5+": 60000},
+    "Finance":    {"0-2": 30000, "2-5": 50000, "5+": 75000},
+    "Operations": {"0-2": 20000, "2-5": 35000, "5+": 55000},
+}
+
+# Employee Database (simulated)
+EMPLOYEES = {
+    "EMP001": {"name": "Ganesh R",    "department": "IT",         "experience": 3},
+    "EMP002": {"name": "Priya S",     "department": "HR",         "experience": 6},
+    "EMP003": {"name": "Arjun M",     "department": "Finance",    "experience": 1},
+    "EMP004": {"name": "Deepa K",     "department": "Operations", "experience": 4},
+    "EMP005": {"name": "Vikram T",    "department": "IT",         "experience": 7},
+}
+
+def get_experience_slab(years):
+    if years < 2:
+        return "0-2"
+    elif years < 5:
+        return "2-5"
+    else:
+        return "5+"
+
+def get_basic_salary(department, experience):
+    slab = get_experience_slab(experience)
+    return SALARY_STRUCTURE.get(department, {}).get(slab, 0)
+
+def calculate_allowances(basic):
+    hra       = round(basic * 0.40)   # 40% of basic
+    da        = round(basic * 0.10)   # 10% of basic
+    medical   = 1500                  # Fixed
+    travel    = 1000                  # Fixed
     return {
-        "gross_salary": gross,
-        "tax": tax,
-        "net_salary": final
-    }
-
-def calculate_hra(basic_salary):
-    hra = basic_salary * 0.20
-    return {"hra": hra}
-
-def calculate_pf(basic_salary):
-    pf = basic_salary * 0.12
-    return {"pf_deduction": pf}
-
-def calculate_bonus(basic_salary):
-    bonus = basic_salary * 0.05
-    return {"bonus": bonus}
-
-def calculate_total_salary(basic, allowance, deduction):
-    bonus = basic * 0.05
-    hra = basic * 0.20
-    pf = basic * 0.12
-    gross = basic + allowance + bonus + hra
-    net_before_tax = gross - deduction - pf
-    tax = net_before_tax * 0.10
-    final = net_before_tax - tax
-
-    return {
-        "gross_salary": gross,
-        "bonus": bonus,
         "hra": hra,
-        "pf_deduction": pf,
-        "tax": tax,
-        "net_salary": final
+        "da": da,
+        "medical_allowance": medical,
+        "travel_allowance": travel,
+        "total_allowances": hra + da + medical + travel
     }
 
-def generate_payslip(emp_id, month, net_salary):
+def calculate_deductions(basic, gross):
+    pf   = round(basic * 0.12)        # 12% of basic
+    esi  = round(gross * 0.0075) if gross < 21000 else 0   # 0.75% if gross < 21000
+    pt   = 200 if gross > 15000 else 0                     # Professional Tax
+    tds  = round(gross * 0.10) if gross > 50000 else 0     # TDS 10% if gross > 50000
     return {
-        "employee_id": emp_id,
-        "month": month,
-        "net_salary": net_salary,
-        "status": "Generated"
+        "pf": pf,
+        "esi": esi,
+        "professional_tax": pt,
+        "tds": tds,
+        "total_deductions": pf + esi + pt + tds
     }
-# CR-002 bonus feature updated 
-# CR-009 enhanced payroll logic verified
+
+def get_employee(emp_id):
+    return EMPLOYEES.get(emp_id.upper(), None)
+
+def generate_payslip(emp_id):
+    emp = get_employee(emp_id)
+    if not emp:
+        return None
+
+    basic       = get_basic_salary(emp["department"], emp["experience"])
+    allowances  = calculate_allowances(basic)
+    gross       = basic + allowances["total_allowances"]
+    deductions  = calculate_deductions(basic, gross)
+    net_salary  = gross - deductions["total_deductions"]
+    slab        = get_experience_slab(emp["experience"])
+
+    return {
+        "emp_id":           emp_id.upper(),
+        "name":             emp["name"],
+        "department":       emp["department"],
+        "experience":       emp["experience"],
+        "experience_slab":  slab,
+        "basic_salary":     basic,
+        "allowances":       allowances,
+        "gross_salary":     gross,
+        "deductions":       deductions,
+        "net_salary":       net_salary
+    }
